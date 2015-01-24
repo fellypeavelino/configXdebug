@@ -1,0 +1,870 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<!-- saved from url=(0079)http://www.diogomatheus.com.br/blog/php/depuracao-de-aplicacoes-php-com-xdebug/ -->
+<html xmlns="http://www.w3.org/1999/xhtml"><div class="fit-vids-style" id="fit-vids-style" style="display: none;">­<style>.fluid-width-video-wrapper{width:100%;position:relative;padding:0;}.fluid-width-video-wrapper iframe,.fluid-width-video-wrapper object,.fluid-width-video-wrapper embed {position:absolute;top:0;left:0;width:100%;height:100%;}</style></div><script id="twitter-wjs" src="./Depuração de aplicações PHP com XDebug   Diogo Matheus Blog_files/widgets.js"></script><script type="text/javascript" id="www-widgetapi-script" src="./Depuração de aplicações PHP com XDebug   Diogo Matheus Blog_files/www-widgetapi.js" async=""></script><script type="text/javascript" async="" src="./Depuração de aplicações PHP com XDebug   Diogo Matheus Blog_files/ga.js"></script><script id="tinyhippos-injected">if (window.top.ripple) { window.top.ripple("bootstrap").inject(window, document); }</script><head profile="http://gmpg.org/xfn/11"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+
+<title>Depuração de aplicações PHP com XDebug | Diogo Matheus Blog</title>
+
+<meta name="designer" content="digitalnature.ro">
+
+<link rel="alternate" type="application/rss+xml" title="Feed de Diogo Matheus Blog" href="http://feeds.feedburner.com/DiogoMatheusBlog?format=xml">
+
+<link rel="pingback" href="http://www.diogomatheus.com.br/blog/xmlrpc.php">
+<link rel="shortcut icon" href="http://www.diogomatheus.com.br/images/favicon/favicon.ico">
+<link rel="image_src" href="http://www.diogomatheus.com.br/images/diogomatheus-logo-miniatura.jpg">
+
+<meta name="y_key" content="cb980cba04599ec2">
+<meta name="msvalidate.01" content="1239458D5469AB4634E6F55B681DF045">
+<meta name="google-site-verification" content="rIF2FD5omU5uTfzd9RhPx_wBnH_GbX9VD7yWWabGrmY">
+
+<script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-22122999-1']);
+    _gaq.push(['_trackPageview']);
+    
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+</script>
+
+<style type="text/css">
+ @import "http://www.diogomatheus.com.br/blog/wp-content/themes/mystique/style.css";
+ @import "http://www.diogomatheus.com.br/blog/php/depuracao-de-aplicacoes-php-com-xdebug/?mystique=css";
+</style>
+<!--[if lte IE 6]><link media="screen" rel="stylesheet" href="http://www.diogomatheus.com.br/blog/wp-content/themes/mystique/ie6.css" type="text/css" /><![endif]-->
+<!--[if IE 7]><link media="screen" rel="stylesheet" href="http://www.diogomatheus.com.br/blog/wp-content/themes/mystique/ie7.css" type="text/css" /><![endif]-->
+  
+<!-- All in One SEO Pack 2.2.4.2 by Michael Torbert of Semper Fi Web Design[261,306] -->
+<meta name="description" content="Depuração (em inglês: debugging, debug) é o processo de encontrar a causa de um erro já detectado. Muita gente confunde depuração com teste, mas existe uma">
+
+<meta name="keywords" content="debug,depuração,eclipse,php,wamp,xdebug,zend studio">
+
+<link rel="canonical" href="./Depuração de aplicações PHP com XDebug   Diogo Matheus Blog_files/Depuração de aplicações PHP com XDebug   Diogo Matheus Blog.html">
+<!-- /all in one seo pack -->
+<link rel="alternate" type="application/rss+xml" title="Diogo Matheus Blog » Depuração de aplicações PHP com XDebug  Feed de comentários" href="http://www.diogomatheus.com.br/blog/php/depuracao-de-aplicacoes-php-com-xdebug/feed/">
+<link rel="stylesheet" id="output-css" href="./Depuração de aplicações PHP com XDebug   Diogo Matheus Blog_files/output.css" type="text/css" media="all">
+<link rel="stylesheet" id="tabby.css-css" href="./Depuração de aplicações PHP com XDebug   Diogo Matheus Blog_files/tabby.css" type="text/css" media="all">
+        <script type="text/javascript">
+            var eppathtoscripts = "http://www.diogomatheus.com.br/blog/wp-content/plugins/youtube-embed-plus/scripts/";
+            var epresponsiveselector = ["iframe.__youtube_prefs_widget__"];
+            var epdovol = true; //false;
+        </script>
+        <script type="text/javascript" src="./Depuração de aplicações PHP com XDebug   Diogo Matheus Blog_files/ytprefs.min.js"></script><script src="./Depuração de aplicações PHP com XDebug   Diogo Matheus Blog_files/iframe_api" type="text/javascript"></script>
+<script type="text/javascript" src="./Depuração de aplicações PHP com XDebug   Diogo Matheus Blog_files/jquery.js"></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.diogomatheus.com.br/blog/xmlrpc.php?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.diogomatheus.com.br/blog/wp-includes/wlwmanifest.xml"> 
+<link rel="prev" title="Trabalhando com funções no PHP" href="http://www.diogomatheus.com.br/blog/php/trabalhando-com-funcoes-no-php/">
+<link rel="next" title="Funções anônimas – Lambda e Closure no PHP" href="http://www.diogomatheus.com.br/blog/php/funcoes-anonimas-lambda-e-closure-no-php/">
+<meta name="generator" content="WordPress 3.3.1">
+<link rel="shortlink" href="http://www.diogomatheus.com.br/blog/?p=1355">
+	<style type="text/css">
+	    .postTabs_divs{
+	padding: 4px;	
+}
+
+
+.postTabs_titles{
+	display:none;	
+}
+
+ul.postTabs
+	{
+	margin:0px 0px 1em !important;
+	padding: 0.2em 1em 0.2em 20px !important;
+	border-bottom: 1px solid #ccc !important;
+	font-size: 11px;
+	list-style-type: none !important;
+	line-height:normal;
+	text-align: left;
+	display: block !important;
+	background: none;
+	}
+
+ul.postTabs li
+	{	
+	display: inline !important;
+	font-size: 11px;
+	line-height:normal;
+	background: none;
+	padding: 0px;
+	margin: 0px;
+	}
+  
+ul.postTabs li:before{
+content: none;	
+}  
+  	
+ul.postTabs li a
+	{
+	text-decoration: none;
+	background: #f3f3f3;
+	border: 1px solid #ccc  !important;
+	padding: 0.2em 0.4em !important;
+	color: #666 !important;
+	outline:none;	
+	cursor: pointer;
+	
+	}
+	
+ul.postTabs li.postTabs_curr a{
+	border-bottom: 1px solid #fff  !important;
+	background: #fff;
+	color: #000000 !important;
+	text-decoration: none;
+	
+	}
+
+ul.postTabs li a:hover
+	{
+	color: #666 !important;
+	background: #fff;
+	text-decoration: none;
+	
+	}
+
+.postTabsNavigation{
+	display: block !important;
+	overflow:hidden;
+}
+
+.postTabs_nav_next{
+	float:right;
+}
+
+.postTabs_nav_prev{
+	float:left;
+}
+	</style>
+	<link rel="stylesheet" type="text/css" href="./Depuração de aplicações PHP com XDebug   Diogo Matheus Blog_files/shCore.css"><link rel="stylesheet" type="text/css" href="./Depuração de aplicações PHP com XDebug   Diogo Matheus Blog_files/shThemeDefault.css"><style type="text/css" id="syntaxhighlighteranchor"></style>
+</head>
+<body class="single-post title-depuracao-de-aplicacoes-php-com-xdebug category-php tag-debug tag-depuracao tag-eclipse tag-php tag-wamp tag-xdebug tag-zend-studio author-admin col-2-right fixed browser-chrome" data-twttr-rendered="true">
+ <div id="page">
+
+
+  <div class="page-content header-wrapper">
+
+
+    <div id="header" class="bubbleTrigger">
+    
+                
+
+      <div id="site-title" class="clear-block">
+	
+	<div id="dm-header">
+    	<div id="dm-header-logo">
+	        <img src="./Depuração de aplicações PHP com XDebug   Diogo Matheus Blog_files/diogomatheus.jpg" alt="Diogo Matheus Logo" width="442" height="93">
+        </div>
+        <div id="dm-header-menu">
+            <ul>
+                <li><a href="http://www.diogomatheus.com.br/" title="Acessar o perfil">Perfil</a></li>
+                <li class="active">Blog</li>
+            </ul>
+        </div>
+      	<div id="dm-header-description">// Dicas e tutoriais sobre desenvolvimento</div>
+        <div id="dm-header-icons">
+        	<ul>
+            	<li class="expanded">
+                	<a href="http://twitter.com/dmmatheus"><img src="./Depuração de aplicações PHP com XDebug   Diogo Matheus Blog_files/twitter.png" alt="twitter" width="32" height="32"></a>
+                    <a href="http://twitter.com/dmmatheus"><span class="expanded-label">siga-me</span></a>
+                </li>
+                <li>
+                	<a href="http://delicious.com/dmmatheus">
+                		<img src="./Depuração de aplicações PHP com XDebug   Diogo Matheus Blog_files/delicious.png" alt="delicious" width="32" height="32">
+                    </a>
+				</li>
+                <li>
+                	<a href="http://feeds.feedburner.com/DiogoMatheusBlog?format=xml">
+                		<img src="./Depuração de aplicações PHP com XDebug   Diogo Matheus Blog_files/rss.png" alt="rss" width="32" height="32">
+                    </a>
+                </li>
+                <li class="expanded">
+                	<a href="https://www.facebook.com/dm.matheus"><img src="./Depuração de aplicações PHP com XDebug   Diogo Matheus Blog_files/facebook.png" alt="facebook" width="32" height="32"></a> 
+                    <a href="https://www.facebook.com/dm.matheus"><span class="expanded-label">me adicione</span></a>
+                </li>
+                <li>
+                	<a href="http://www.linkedin.com/pub/diogo-matheus/2a/510/5a4">
+                		<img src="./Depuração de aplicações PHP com XDebug   Diogo Matheus Blog_files/linkedin.png" alt="linkedin" width="32" height="32">
+                    </a>
+                </li>
+                <li>
+                	<a href="http://www.youtube.com/user/diogomatheusblog">
+                		<img src="./Depuração de aplicações PHP com XDebug   Diogo Matheus Blog_files/youtube.png" alt="youtube" width="32" height="32">
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+        
+      </div>
+
+      
+   <div class="shadow-left">
+   <div class="shadow-right clear-block">
+   
+   <ul class="navigation  clear-block sf-js-enabled">
+             <li class="home"><a class="home fadeThis" href="http://www.diogomatheus.com.br/blog" title="Clique para ir ao Início"><span class="title">Início</span><span class="pointer"></span><span class="hover" style="opacity: 0;"></span></a></li>
+           <li id="menu-item-2121"><a href="http://www.diogomatheus.com.br/blog/category/gerenciamento-de-projetos/" class="fadeThis"><span class="title">Gerenciamento de Projetos</span><span class="pointer"></span><span class="hover" style="opacity: 0;"></span></a></li>
+<li id="menu-item-3310"><a href="http://www.diogomatheus.com.br/blog/category/orientacao-a-objetos/" class="fadeThis"><span class="title">Orientação a Objetos</span><span class="pointer"></span><span class="hover" style="opacity: 0;"></span></a></li>
+<li id="menu-item-1203" class="active-parent active-post-parent"><a href="http://www.diogomatheus.com.br/blog/category/php/" class="fadeThis"><span class="title">PHP</span><span class="pointer"></span><span class="hover" style="opacity: 0;"></span></a></li>
+<li id="menu-item-2009"><a href="http://www.diogomatheus.com.br/blog/category/resenha-de-livros/" class="fadeThis"><span class="title">Resenha</span><span class="pointer"></span><span class="hover" style="opacity: 0;"></span></a></li>
+<li id="menu-item-1202"><a href="http://www.diogomatheus.com.br/blog/category/zend-framework/" class="fadeThis"><span class="title">Zend Framework</span><span class="pointer"></span><span class="hover" style="opacity: 0;"></span></a></li>
+   </ul>
+   </div>
+   </div>
+  
+            
+
+    </div>
+
+  </div>
+
+  <!-- left+right bottom shadow -->
+  <div class="page-content main-wrapper">
+   <div>
+
+     
+  <!-- main content: primary + sidebar(s) -->
+  <div id="main">
+   <div id="main-inside" class="clear-block">
+    <!-- primary content -->
+    <div id="primary-content" role="main">
+     <div class="blocks">
+                    <div class="single-navigation clear-block">
+          <div class="alignleft">« <a href="http://www.diogomatheus.com.br/blog/php/trabalhando-com-funcoes-no-php/" rel="prev">Trabalhando com funções no PHP</a></div>
+          <div class="alignright"><a href="http://www.diogomatheus.com.br/blog/php/funcoes-anonimas-lambda-e-closure-no-php/" rel="next">Funções anônimas – Lambda e Closure no PHP</a> »</div>
+        </div>
+
+        <!-- post -->
+        <div id="post-1355" class="hentry post post-1 odd author-admin category-php post_tag-debug post_tag-depuracao post_tag-eclipse post_tag-php post_tag-wamp post_tag-xdebug post_tag-zend-studio single">
+
+          <h1 class="title">Depuração de aplicações PHP com XDebug</h1>	  
+          <div class="post-content clear-block">
+          <!-- AddThis Button BEGIN -->
+<div addthis:url="http://www.diogomatheus.com.br/blog/php/depuracao-de-aplicacoes-php-com-xdebug/" addthis:title="Depuração de aplicações PHP com XDebug " class="addthis_toolbox addthis_default_style ">
+<a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+<a class="addthis_button_tweet"></a>
+<a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+<a class="addthis_counter addthis_pill_style"></a>
+</div>
+
+<!-- AddThis Button END --><p style="text-align: justify;">Depuração (em inglês: debugging, debug) é o processo de encontrar a causa de um erro já detectado. Muita gente confunde depuração com teste, mas existe uma grande diferença entre esses conceitos.</p>
+<p style="text-align: justify;"><strong>Objetivo do teste:</strong> Executar a aplicação com a intenção de encontrar erros (bugs).</p>
+<p style="text-align: justify;"><strong>Objetivo da depuração:</strong> Encontrar a causa do erro detectado no teste e implementar as modificações na aplicação para correção do erro.</p>
+<p style="text-align: justify;">Neste artigo iremos configurar o ambiente para depuração utilizando o wamp, na versão 2.2, que possui XDebug nativo, sendo necessário apenas configurar o arquivo php.ini e IDE, aqui vamos configurar o Eclipse PDT, mas essa configuração também pode ser utilizada no Zend Studio.</p>
+<p><strong>Mas eu não estou usando wamp, o que eu faço?</strong></p>
+<p style="text-align: justify;">Caso seu ambiente ainda não tenha o XDebug instalado, será necessário instalar o mesmo antes de prosseguir.</p>
+<p style="text-align: justify;">Para instalar no windows, acesse o site&nbsp;<a href="http://www.xdebug.org/">http://www.xdebug.org/</a>&nbsp;e efetue o download da última versão para o seu sistema, 32 ou 64 bits.</p>
+<p style="text-align: justify;">No linux utilize o comando a seguir para instalar o XDebug:</p>
+<div><div id="highlighter_349092" class="syntaxhighlighter  plain"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="plain plain">$ sudo apt-get install php5-xdebug</code></div></div></td></tr></tbody></table></div></div>
+<p>Também é possível instalar via PECL:</p>
+<div><div id="highlighter_375316" class="syntaxhighlighter  plain"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="plain plain">$ sudo pecl install xdebug</code></div></div></td></tr></tbody></table></div></div>
+<p><strong>Configurando o arquivo php.ini</strong></p>
+<p style="text-align: justify;">No arquivo php.ini vamos precisar adicionar/editar algumas linhas para que o XDebug funcione corretamente, confira:</p>
+<div><div id="highlighter_848373" class="syntaxhighlighter  plain"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div><div class="line number10 index9 alt1">10</div><div class="line number11 index10 alt2">11</div><div class="line number12 index11 alt1">12</div><div class="line number13 index12 alt2">13</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="plain plain">; XDEBUG Extension</code></div><div class="line number2 index1 alt1">&nbsp;</div><div class="line number3 index2 alt2"><code class="plain plain">zend_extension = "path"</code></div><div class="line number4 index3 alt1">&nbsp;</div><div class="line number5 index4 alt2"><code class="plain plain">[xdebug]</code></div><div class="line number6 index5 alt1"><code class="plain plain">xdebug.remote_enable = On</code></div><div class="line number7 index6 alt2"><code class="plain plain">xdebug.profiler_enable = On</code></div><div class="line number8 index7 alt1"><code class="plain plain">xdebug.profiler_enable_trigger = On</code></div><div class="line number9 index8 alt2"><code class="plain plain">xdebug.remote_autostart = 0</code></div><div class="line number10 index9 alt1"><code class="plain plain">xdebug.remote_handler= "dbgp"</code></div><div class="line number11 index10 alt2"><code class="plain plain">xdebug.remote_host = "127.0.0.1"</code></div><div class="line number12 index11 alt1"><code class="plain plain">xdebug.remote_mode = "req"</code></div><div class="line number13 index12 alt2"><code class="plain plain">xdebug.remote_port = 9000</code></div></div></td></tr></tbody></table></div></div>
+<p>Em zend_extension precisamos setar o caminho para o arquivo do XDebug.</p>
+<p>No caso da instalação padrão do wamp o valor de zend_extension será:</p>
+<div><div id="highlighter_764" class="syntaxhighlighter  plain"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="plain plain">c:/wamp/bin/php/php5.3.8/zend_ext/php_xdebug-2.1.2-5.3-vc9.dll</code></div></div></td></tr></tbody></table></div></div>
+<p><em>Obs: No linux o arquivo possui extensão .so.</em></p>
+<p style="text-align: justify;">Após finalizar essa configuração salve o arquivo php.ini e reinicie o servidor, no caso do wamp, reinicie todos os serviços.</p>
+<p><strong>Verificando se o XDebug está habilitado</strong></p>
+<p style="text-align: justify;">Para verificar se o XDebug está habilitado e configurado corretamente, acesse a url&nbsp;<a href="http://localhost/?phpinfo=1">http://localhost/?phpinfo=1</a>&nbsp;se estiver utilizando wamp, ou crie um arquivo que chame a função phpinfo()&nbsp;e confira se existe as informações a seguir.</p>
+<div id="attachment_1375" class="wp-caption alignnone" style="width: 215px"><a href="http://www.diogomatheus.com.br/blog/wp-content/uploads/2012/02/xdebug-habilitado.jpg"><img class="size-medium wp-image-1375" title="xdebug-habilitado" src="./Depuração de aplicações PHP com XDebug   Diogo Matheus Blog_files/xdebug-habilitado-205x300.jpg" alt="Informações no phpinfo()" width="205" height="300"></a><p class="wp-caption-text">Informações no phpinfo()</p></div>
+<p><strong>Configurando o Eclipse PDT / Zend Studio</strong></p>
+<p style="text-align: justify;">Com o XDebug configurado, vamos precisar realizar algumas configurações na IDE.</p>
+<p style="text-align: justify;">Window &gt;&gt; Preferences &gt;&gt; PHP &gt;&gt; Debug</p>
+<p style="text-align: justify;">Selecione o XDebug na opção PHP Debugger e clique em Configure, selecione o XDebug e clique em configure novamente. Na opção Accept Remote Session (JIT), marque a opção Any.</p>
+<div id="attachment_1383" class="wp-caption alignnone" style="width: 222px"><a href="http://www.diogomatheus.com.br/blog/wp-content/uploads/2012/02/xdebug-config-any.jpg"><img class="size-medium wp-image-1383" title="xdebug-config-any" src="./Depuração de aplicações PHP com XDebug   Diogo Matheus Blog_files/xdebug-config-any-212x300.jpg" alt="Configuração XDebug" width="212" height="300"></a><p class="wp-caption-text">Configuração XDebug</p></div>
+<p style="text-align: justify;">Volte para tela de Debug, clique em PHP Executables, depois clique em Add, siga as configurações abaixo e clique em Finish.</p>
+<div id="attachment_1380" class="wp-caption alignnone" style="width: 310px"><a href="http://www.diogomatheus.com.br/blog/wp-content/uploads/2012/02/add-php-executable.jpg"><img class="size-medium wp-image-1380" title="add-php-executable" src="./Depuração de aplicações PHP com XDebug   Diogo Matheus Blog_files/add-php-executable-300x225.jpg" alt="PHP Executable" width="300" height="225"></a><p class="wp-caption-text">PHP Executable</p></div>
+<p style="text-align: justify;">Volte para tela de Debug e selecione em PHP Executable a opção que acabamos de criar e&nbsp;desmarque a opção Break at First line, confira o resultado da tela de debug.</p>
+<div id="attachment_1382" class="wp-caption alignnone" style="width: 310px"><a href="http://www.diogomatheus.com.br/blog/wp-content/uploads/2012/02/resultado-tela-debug.jpg"><img class="size-medium wp-image-1382" title="resultado-tela-debug" src="./Depuração de aplicações PHP com XDebug   Diogo Matheus Blog_files/resultado-tela-debug-300x295.jpg" alt="Configuração da tela Debug" width="300" height="295"></a><p class="wp-caption-text">Configuração da tela Debug</p></div>
+<p style="text-align: justify;">Agora vamos definir em qual navegador nosso script/aplicação será executado ao realizar o debug, eu escolhi o chrome, mas fique livre para escolher seu preferido.</p>
+<p style="text-align: justify;">Window &gt;&gt; Preferences &gt;&gt; General &gt;&gt; Web Browser</p>
+<p style="text-align: justify;">Selecione a opção Use external web browser, clique em new e adicione um nome e o&nbsp;executável&nbsp;do navegador e clique em OK.</p>
+<div id="attachment_1381" class="wp-caption alignnone" style="width: 310px"><a href="http://www.diogomatheus.com.br/blog/wp-content/uploads/2012/02/chrome-config.jpg"><img class="size-medium wp-image-1381" title="chrome-config" src="./Depuração de aplicações PHP com XDebug   Diogo Matheus Blog_files/chrome-config-300x104.jpg" alt="Configurando chrome" width="300" height="104"></a><p class="wp-caption-text">Configurando chrome</p></div>
+<p style="text-align: justify;">Agora selecione o navegador que você acabou de criar, clique em Apply e depois OK para concluir.</p>
+<p><strong>Trabalhando com depuração no PHP</strong></p>
+<p style="text-align: justify;">Com a nossa IDE configurada, precisamos criar um projeto e definir o perfil de debug para este projeto.</p>
+<p style="text-align: justify;">File &gt;&gt; New &gt;&gt; PHP Project</p>
+<p style="text-align: justify;">Escolha o nome example-debug e de preferência coloque este projeto na raiz do servidor, na pasta www se estiver usando o wamp.</p>
+<p style="text-align: justify;">Agora crie um arquivo index.php nesse projeto com o seguinte conteúdo.</p>
+<div><div id="highlighter_989208" class="syntaxhighlighter  php"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="php plain">&lt;?php</code></div><div class="line number2 index1 alt1"><code class="php variable">$var</code> <code class="php plain">= null;</code></div><div class="line number3 index2 alt2">&nbsp;</div><div class="line number4 index3 alt1"><code class="php variable">$var</code> <code class="php plain">= 10;</code></div><div class="line number5 index4 alt2">&nbsp;</div><div class="line number6 index5 alt1"><code class="php variable">$var</code> <code class="php plain">+= 20;</code></div><div class="line number7 index6 alt2">&nbsp;</div><div class="line number8 index7 alt1"><code class="php functions">echo</code> <code class="php variable">$var</code><code class="php plain">;</code></div><div class="line number9 index8 alt2"><code class="php plain">?&gt;</code></div></div></td></tr></tbody></table></div></div>
+<p style="text-align: justify;">Agora marque um breakpoint na linha 6, clicando duas vezes na faixa lateral que corresponde está linha.</p>
+<div id="attachment_1387" class="wp-caption alignnone" style="width: 181px"><a href="./Depuração de aplicações PHP com XDebug   Diogo Matheus Blog_files/breakpoint.jpg"><img class="size-full wp-image-1387" title="breakpoint" src="./Depuração de aplicações PHP com XDebug   Diogo Matheus Blog_files/breakpoint.jpg" alt="Breakpoint" width="171" height="197"></a><p class="wp-caption-text">Breakpoint</p></div>
+<p style="text-align: justify;">Feito isso vamos configurar o perfil de debug da aplicação.</p>
+<p style="text-align: justify;">Run &gt;&gt; Debug Configurations</p>
+<p style="text-align: justify;">Clique com o botão direito do mouse em PHP Web Page e adicione um novo perfil, confira o resultado dessa configuração.</p>
+<div id="attachment_1386" class="wp-caption alignnone" style="width: 310px"><a href="http://www.diogomatheus.com.br/blog/wp-content/uploads/2012/02/app-perfil-debug.jpg"><img class="size-medium wp-image-1386" title="app-perfil-debug" src="./Depuração de aplicações PHP com XDebug   Diogo Matheus Blog_files/app-perfil-debug-300x208.jpg" alt="Perfil de debug da aplicação" width="300" height="208"></a><p class="wp-caption-text">Perfil de debug da aplicação</p></div>
+<p style="text-align: justify;">Agora clique em Apply, em seguida clique em Debug, seu navegador irá abrir realizando uma requisição e logo de cara o eclipse irá acusar que encontrou um breakpoint durante a execução, perguntando se você deseja mudar a perspectiva do eclipse para debug.</p>
+<div id="attachment_1388" class="wp-caption alignnone" style="width: 310px"><a href="http://www.diogomatheus.com.br/blog/wp-content/uploads/2012/02/change-perspective.jpg"><img class="size-medium wp-image-1388" title="change-perspective" src="./Depuração de aplicações PHP com XDebug   Diogo Matheus Blog_files/change-perspective-300x132.jpg" alt="Deseja mudar de perspectiva?" width="300" height="132"></a><p class="wp-caption-text">Deseja mudar de perspectiva?</p></div>
+<p>Ao clicar em yes nossa perspectiva muda para debug, veja o resultado:</p>
+<div id="attachment_1389" class="wp-caption alignnone" style="width: 310px"><a href="http://www.diogomatheus.com.br/blog/wp-content/uploads/2012/02/debug-perspective.jpg"><img class="size-medium wp-image-1389" title="debug-perspective" src="./Depuração de aplicações PHP com XDebug   Diogo Matheus Blog_files/debug-perspective-300x183.jpg" alt="Perspectiva de debug" width="300" height="183"></a><p class="wp-caption-text">Perspectiva de debug</p></div>
+<p style="text-align: justify;">Enfim, com o XDebug configurado no ambiente, podemos depurar desde um script simples como visto acima até aplicações de grande porte.</p>
+                    </div>
+          
+                      <div class="post-tags">
+            <a href="http://www.diogomatheus.com.br/blog/tag/debug/" rel="tag" title="debug (1 topics)">debug</a>, <a href="http://www.diogomatheus.com.br/blog/tag/depuracao/" rel="tag" title="depuração (1 topics)">depuração</a>, <a href="http://www.diogomatheus.com.br/blog/tag/eclipse/" rel="tag" title="Eclipse (1 topics)">Eclipse</a>, <a href="http://www.diogomatheus.com.br/blog/tag/php/" rel="tag" title="PHP (24 topics)">PHP</a>, <a href="http://www.diogomatheus.com.br/blog/tag/wamp/" rel="tag" title="wamp (3 topics)">wamp</a>, <a href="http://www.diogomatheus.com.br/blog/tag/xdebug/" rel="tag" title="XDebug (1 topics)">XDebug</a>, <a href="http://www.diogomatheus.com.br/blog/tag/zend-studio/" rel="tag" title="zend studio (2 topics)">zend studio</a>            </div>
+            
+
+          
+        </div>
+        <!-- /post -->
+
+                <table class="post-meta">
+          <tbody><tr>
+            <td>   <!-- socialize -->
+   <div class="shareThis clear-block">
+    <a href="http://www.diogomatheus.com.br/blog/php/depuracao-de-aplicacoes-php-com-xdebug/#" class="control share">Compartilhe este artigo!</a>
+    <ul class="bubble">
+     <li><a href="http://twitter.com/home?status=Depura%C3%A7%C3%A3o%20de%20aplica%C3%A7%C3%B5es%20PHP%20com%20XDebug+-+http://tinyurl.com/7m62d46" class="twitter" title="Tweet This!"><span>Twitter</span></a></li>
+     <li><a href="http://digg.com/submit?phase=2&url=http://www.diogomatheus.com.br/blog/php/depuracao-de-aplicacoes-php-com-xdebug/&title=Depura%C3%A7%C3%A3o%20de%20aplica%C3%A7%C3%B5es%20PHP%20com%20XDebug" class="digg" title="Digg this!"><span>Digg</span></a></li>
+     <li><a href="http://www.facebook.com/share.php?u=http://www.diogomatheus.com.br/blog/php/depuracao-de-aplicacoes-php-com-xdebug/&t=Depura%C3%A7%C3%A3o%20de%20aplica%C3%A7%C3%B5es%20PHP%20com%20XDebug" class="facebook" title="Share this on Facebook"><span>Facebook</span></a></li>
+     <li><a href="http://del.icio.us/post?url=http://www.diogomatheus.com.br/blog/php/depuracao-de-aplicacoes-php-com-xdebug/&title=Depura%C3%A7%C3%A3o%20de%20aplica%C3%A7%C3%B5es%20PHP%20com%20XDebug" class="delicious" title="Share this on del.icio.us"><span>Delicious</span></a></li>
+     <li><a href="http://www.stumbleupon.com/submit?url=http://www.diogomatheus.com.br/blog/php/depuracao-de-aplicacoes-php-com-xdebug/&title=Depura%C3%A7%C3%A3o%20de%20aplica%C3%A7%C3%B5es%20PHP%20com%20XDebug" class="stumbleupon" title="Stumbled upon something good? Share it on StumbleUpon"><span>StumbleUpon</span></a></li>
+     <li><a href="http://www.google.com/bookmarks/mark?op=add&bkmk=http://www.diogomatheus.com.br/blog/php/depuracao-de-aplicacoes-php-com-xdebug/&title=Depura%C3%A7%C3%A3o%20de%20aplica%C3%A7%C3%B5es%20PHP%20com%20XDebug" class="google" title="Add this to Google Bookmarks"><span>Google Bookmarks</span></a></li>
+     <li><a href="http://www.linkedin.com/shareArticle?mini=true&url=http://www.diogomatheus.com.br/blog/php/depuracao-de-aplicacoes-php-com-xdebug/&title=Depura%C3%A7%C3%A3o%20de%20aplica%C3%A7%C3%B5es%20PHP%20com%20XDebug&summary=Depura%C3%A7%C3%A3o%20(em%20ingl%C3%AAs:%20debugging,%20debug)%20%C3%A9%20o%20processo%20de%20encontrar%20a%20causa%20de%20um%20erro%20j%C3%A1%20detectado.%20Muita%20gente%20confunde%20depura%C3%A7%C3%A3o%20com%20teste,%20mas%20existe%20uma%20grande%20diferen%C3%A7a%20entre%20esses%20conceitos.Objetivos%20do%20teste:%20Executar%20o%20programa%20com%20a%20inten%C3%A7%C3%A3o%20de%20encontrar%20erros%20(bugs).Objetivos%20da%20depura%C3%A7%C3%A3o:%20Encontrar%20a%20causa%20do%20erro%20detectado%20no%20teste%20e%20implementar%20as%20modifica%C3%A7%C3%B5es%20no%20programa%20para%20corre%C3%A7%C3%A3o%20do%20erro.Neste%20artigo%20iremos%20configurar%20o%20ambiente%20para%20depura%C3%A7%C3%A3o%20utilizando%20o%20wamp,%20na%20vers%C3%A3o%202.2,%20que%20possui%20XDebug%20nativo,%20sendo%20necess%C3%A1rio%20apenas%20configurar%20o%20arquivo%20php.ini%20e%20sua%20IDE,%20aqui%20vamos%20configurar%20o%20Eclipse%20PDT,%20est%C3%A1%20mesma%20configura%C3%A7%C3%A3o%20pode%20ser%20utilizada%20no%20Zend%20Studio.&source=Diogo%20Matheus%20Blog" class="linkedin" title="Share this on Linkedin"><span>LinkedIn</span></a></li>
+     <li><a href="http://buzz.yahoo.com/buzz?targetUrl=http://www.diogomatheus.com.br/blog/php/depuracao-de-aplicacoes-php-com-xdebug/&headline=Depura%C3%A7%C3%A3o%20de%20aplica%C3%A7%C3%B5es%20PHP%20com%20XDebug&summary=Depura%C3%A7%C3%A3o%20(em%20ingl%C3%AAs:%20debugging,%20debug)%20%C3%A9%20o%20processo%20de%20encontrar%20a%20causa%20de%20um%20erro%20j%C3%A1%20detectado.%20Muita%20gente%20confunde%20depura%C3%A7%C3%A3o%20com%20teste,%20mas%20existe%20uma%20grande%20diferen%C3%A7a%20entre%20esses%20conceitos.Objetivos%20do%20teste:%20Executar%20o%20programa%20com%20a%20inten%C3%A7%C3%A3o%20de%20encontrar%20erros%20(bugs).Objetivos%20da%20depura%C3%A7%C3%A3o:%20Encontrar%20a%20causa%20do%20erro%20detectado%20no%20teste%20e%20implementar%20as%20modifica%C3%A7%C3%B5es%20no%20programa%20para%20corre%C3%A7%C3%A3o%20do%20erro.Neste%20artigo%20iremos%20configurar%20o%20ambiente%20para%20depura%C3%A7%C3%A3o%20utilizando%20o%20wamp,%20na%20vers%C3%A3o%202.2,%20que%20possui%20XDebug%20nativo,%20sendo%20necess%C3%A1rio%20apenas%20configurar%20o%20arquivo%20php.ini%20e%20sua%20IDE,%20aqui%20vamos%20configurar%20o%20Eclipse%20PDT,%20est%C3%A1%20mesma%20configura%C3%A7%C3%A3o%20pode%20ser%20utilizada%20no%20Zend%20Studio." class="yahoo" title="Buzz up!"><span>Yahoo Bookmarks</span></a></li>
+     <li><a href="http://technorati.com/faves?add=http://www.diogomatheus.com.br/blog/php/depuracao-de-aplicacoes-php-com-xdebug/" class="technorati" title="Share this on Technorati"><span>Technorati Favorites</span></a></li>
+    </ul>
+   </div>
+   <!-- /socialize -->
+ </td>            <td><a class="control print">Imprimir artigo</a> </td>                        <td class="details">
+              Este artigo foi escrito por <a href="http://www.diogomatheus.com.br/blog/author/admin/" title="Artigos por Diogo Matheus ">Diogo Matheus</a> em 05/03/2012 às 8:30, e está arquivado em <a href="http://www.diogomatheus.com.br/blog/category/php/" title="Ver todos os posts em PHP" rel="category tag">PHP</a>. Siga quaisquer respostas a este artigo através do <a href="http://www.diogomatheus.com.br/blog/php/depuracao-de-aplicacoes-php-com-xdebug/feed/" title="RSS 2.0">RSS 2.0</a>. Você pode <a href="http://www.diogomatheus.com.br/blog/php/depuracao-de-aplicacoes-php-com-xdebug/#respond">deixar uma resposta</a> ou fazer um <a href="http://www.diogomatheus.com.br/blog/php/depuracao-de-aplicacoes-php-com-xdebug/trackback/" rel="trackback">trackback</a> do seu próprio site.            </td>
+                      </tr>
+        </tbody></table>
+        
+       
+       
+
+<!-- tabbed content -->
+<div class="tabbed-content post-tabs clear-block" id="post-tabs">
+
+  <!-- tab navigation (items must be in reverse order because of the tab-design) -->
+ <div class="tabs-wrap clear-block">
+  <ul class="tabs">
+    <li class="related-posts"><a href="http://www.diogomatheus.com.br/blog/php/depuracao-de-aplicacoes-php-com-xdebug/#section-relatedPosts"><span>Artigos Relacionados</span></a></li>        <li class="comments active"><a href="http://www.diogomatheus.com.br/blog/php/depuracao-de-aplicacoes-php-com-xdebug/#section-comments"><span>Comentários (1)</span></a></li>  </ul>
+ </div>
+ <!-- /tab nav -->
+ 
+ <!-- tab sections -->
+ <div class="sections">
+
+    <!-- comments -->
+  <div class="section clear-block" id="section-comments">
+
+         <div id="comments-wrap">
+      <div class="clear-block">
+       <ul id="comments" class="comments">
+        
+  <!-- comment entry -->
+  <li class="comment even thread-even depth-1 withAvatars reader name-Aily" id="comment-312455">
+    <div class="comment-head comment odd alt thread-odd thread-alt depth-1 withAvatars reader name-Aily">
+
+      <div class="avatar-box"><img alt="" src="./Depuração de aplicações PHP com XDebug   Diogo Matheus Blog_files/7c1f49d24dd5ab52e8246f34a277860f" class="avatar avatar-48 photo" height="48" width="48"></div>      <div class="author">
+       
+        <span class="by"><a class="comment-id" href="http://www.diogomatheus.com.br/blog/php/depuracao-de-aplicacoes-php-com-xdebug/#comment-312455">#1</a> escrito por <a class="comment-author" id="comment-author-312455" href="http://website/" rel="nofollow">Aily</a> </span>
+        <br>
+        há 1 mês atrás      </div>
+
+      <div class="controls bubble" style="display: none; opacity: 0; top: -14px;">
+                              <a class="quote" title="Citar" href="http://www.diogomatheus.com.br/blog/php/depuracao-de-aplicacoes-php-com-xdebug/#respond">Citar</a>
+                      </div>
+    </div>
+    <div class="comment-body clear-block" id="comment-body-312455">
+            <div class="comment-text"><p>olá Diogo Matheus, cara você já usou o PhpDesigner? se usou teria noção de como configurar o xdebug no mesmo?</p>
+</div>
+      <a id="comment-reply-312455"></a>
+    </div>
+</li>
+       </ul>
+      </div>
+          </div>
+
+     
+    
+     <!-- comment form -->
+     <div class="comment-form clear-block" id="respond">
+      <div id="comment_post_status"></div><form action="http://www.diogomatheus.com.br/blog/wp-comments-post.php" method="post" id="commentform">
+          	                <div id="author-info">
+            <div class="row">
+                            <input type="text" name="author" id="field-author" class="validate required textfield clearField clearFieldBlurred" value="Nome (obrigatório)" size="40" rel="Nome (obrigatório)">
+            </div>
+            <div class="row">
+                            <input type="text" name="email" id="field-email" class="validate required textfield clearField clearFieldBlurred" value="E-mail (obrigatório, não será publicado)" size="40" rel="E-mail (obrigatório, não será publicado)">
+            </div>
+            <div class="row">
+                            <input type="text" name="url" id="field-url" class="textfield clearField clearFieldBlurred" value="Website" size="40" rel="Website">
+            </div>
+  		  </div>
+        
+        <!-- comment input -->
+        <div class="row">
+                    	<textarea name="comment" id="comment" class="validate required" rows="8" cols="50"></textarea>
+        </div>
+        <!-- /comment input -->
+        <div class="clear-block">
+                    <input type="hidden" name="comment_post_ID" value="1355" id="comment_post_ID">
+<input type="hidden" name="comment_parent" id="comment_parent" value="0">
+                   <p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="57ea133a5a"></p><p style="display: none;"></p>        </div>
+        
+        <!-- comment submit and rss -->
+        <div id="submitbox">
+		<input name="submit" type="submit" id="submit" class="button" value="Enviar Comentário">
+                 <input type="hidden" name="formInput">
+        </div>
+
+      <input type="hidden" id="ak_js" name="ak_js" value="1422122151424"></form>
+
+     </div>
+     <!-- /comment form -->
+       </div>
+  <!-- /comments -->
+  
+    <!-- trackbacks -->
+	<div class="section" id="section-trackbacks" style="display: none;">
+         <h6 class="title">Nenhum trackback ainda.</h6>
+      </div>
+  <!-- /trackbacks -->
+  
+
+    <!-- related posts -->
+  <div class="section" id="section-relatedPosts" style="display: none;">
+             <!-- short post -->
+         <div id="post-2014" class="hentry post post-2 even alt author-admin category-eventos post_tag-codigo-limpo post_tag-drupal post_tag-eventos post_tag-git post_tag-jquery post_tag-moodle post_tag-palestras post_tag-php post_tag-zend-framework">
+           	   	   <h3 class="title"><a href="http://www.diogomatheus.com.br/blog/eventos/phpn-rio-12/" rel="bookmark" title="Permanent Link to PHPnRio 12">PHPnRio 12</a></h3>
+           <p class="post-short-info"><strong>há 2 anos atrás</strong> - <a href="http://www.diogomatheus.com.br/blog/eventos/phpn-rio-12/#respond" title="Comentário para PHPnRio 12">Nenhum comentário</a></p>
+           <div class="post-excerpt"><p>Hoje estive presente no PHPnRio 2012, realizado no CEFET/RJ, campus maracanã, mais uma vez com boas palestras e bons temas. No post do PHPnRio 2011, comentei sobre o coffee-break dos famintos, hahahaha, esse ano me pareceu mais organizado, muita gente cansou de comer, se é que isso é possível, mas não só o coffee-break, todo o evento melhorou se comparado com do ano passado, parabéns aos organizadores, até mesmo a participação das empresas anunciantes foi legal, com kit na entrada, incluindo camisa do evento, panfletos e brindes.</p>
+</div>
+  	 </div>
+         <!-- /short post -->
+                <!-- short post -->
+         <div id="post-1947" class="hentry post post-3 odd author-admin category-eventos post_tag-codigo-limpo post_tag-grade post_tag-jquery post_tag-moodle post_tag-palestras post_tag-php post_tag-rio-de-janeiro post_tag-seguranca post_tag-zend-framework post_tag-zf2">
+           	   	   <h3 class="title"><a href="http://www.diogomatheus.com.br/blog/eventos/grade-de-palestras-do-phpnrio-2012/" rel="bookmark" title="Permanent Link to Grade de palestras do PHPnRio 2012">Grade de palestras do PHPnRio 2012</a></h3>
+           <p class="post-short-info"><strong>há 2 anos atrás</strong> - <a href="http://www.diogomatheus.com.br/blog/eventos/grade-de-palestras-do-phpnrio-2012/#comments" title="Comentário para Grade de palestras do PHPnRio 2012">1 comentário</a></p>
+           <div class="post-excerpt"><p>Nesse ano teremos o evento PHP’nRio em uma data exótica, começando as 9 horas do dia 10/11/2012, no CEFET/RJ – campus Maracanã. Já está disponível grande parte da grade do evento, com temas bem variados, apesar de bastante palestra focada em Drupal. Novamente alguns horários estão disputados por boas palestras, sem falar em alguns conflitos de horário que infelizmente é difícil de evitar por parte da organização, por depender do interesse de cada participante.</p>
+</div>
+  	 </div>
+         <!-- /short post -->
+                <!-- short post -->
+         <div id="post-1668" class="hentry post post-4 even alt author-admin category-php post_tag-arquivos post_tag-classes post_tag-datastructures post_tag-diretorios post_tag-excecoes post_tag-funcoes post_tag-interfaces post_tag-iterators post_tag-observer post_tag-padrao-de-projeto post_tag-php post_tag-spl">
+           	   	   <h3 class="title"><a href="http://www.diogomatheus.com.br/blog/php/standard-php-library-spl/" rel="bookmark" title="Permanent Link to Standard PHP Library (SPL)">Standard PHP Library (SPL)</a></h3>
+           <p class="post-short-info"><strong>há 2 anos atrás</strong> - <a href="http://www.diogomatheus.com.br/blog/php/standard-php-library-spl/#comments" title="Comentário para Standard PHP Library (SPL)">3 comentários</a></p>
+           <div class="post-excerpt"><p>Standard PHP Library (SPL) é uma coleção de interfaces, classes e funções, que oferecem soluções para alguns problemas comuns, além disso, permite que os desenvolvedores trabalhem de maneira padronizada, aproveitando funcionalidades internas da linguagem, por exemplo, criar objetos que são capazes de trabalhar como um array ou ser percorrido através do construtor foreach().<br>
+Neste artigo vamos conhecer alguns recursos oferecidos pela SPL, mas o objetivo principal será apresentar os tipos de recursos e possibilidades que estes oferecem, apontando locais para aprofundar o conhecimento sobre o que está sendo abordado.</p>
+</div>
+  	 </div>
+         <!-- /short post -->
+                <!-- short post -->
+         <div id="post-1890" class="hentry post post-5 odd author-admin category-certificacoes post_tag-agendamento post_tag-certificacao post_tag-dicas post_tag-exame post_tag-php post_tag-php-5-3 post_tag-prova post_tag-resumo post_tag-topicos">
+           	   	   <h3 class="title"><a href="http://www.diogomatheus.com.br/blog/certificacoes/zend-certified-engineer-php-5-3/" rel="bookmark" title="Permanent Link to Zend Certified Engineer PHP 5.3">Zend Certified Engineer PHP 5.3</a></h3>
+           <p class="post-short-info"><strong>há 2 anos atrás</strong> - <a href="http://www.diogomatheus.com.br/blog/certificacoes/zend-certified-engineer-php-5-3/#comments" title="Comentário para Zend Certified Engineer PHP 5.3">9 comentários</a></p>
+           <div class="post-excerpt"><p>Quando comecei a trabalhar na Accenture, minha empresa atual, fui informado sobre o benefício de reembolso de certificações, onde o valor do exame é reinstituído integralmente caso o funcionário seja aprovado no exame. Passei algum tempo pensando em qual certificação iria fazer primeiro, optei pela certificação de PHP 5.3 porque tinha mais tempo de experiência nessa linguagem e comprei o voucher simples para realizar o exame no valor de $195,00.<br>
+Após comprar o voucher, estudei os tópicos do exame durante alguns meses, sempre desenvolvendo alguns exemplos e escrevendo artigos para o blog na medida do possível, comecei a me sentir mais confiante sobre meus conhecimentos na linguagem e fiz alguns simulados online, o que me ajudou bastante a focar nos temas que tinha menos conhecimento, ou melhor, menos prática.<br>
+Dica: Antes de visualizar as respostas, pesquise sobre o tema.</p>
+</div>
+  	 </div>
+         <!-- /short post -->
+                <!-- short post -->
+         <div id="post-1703" class="hentry post post-6 even alt author-admin category-php post_tag-decode post_tag-encode post_tag-javascript post_tag-json post_tag-php post_tag-serializacao">
+           	   	   <h3 class="title"><a href="http://www.diogomatheus.com.br/blog/php/trabalhando-com-json-no-php/" rel="bookmark" title="Permanent Link to Trabalhando com JSON no PHP">Trabalhando com JSON no PHP</a></h3>
+           <p class="post-short-info"><strong>há 2 anos atrás</strong> - <a href="http://www.diogomatheus.com.br/blog/php/trabalhando-com-json-no-php/#respond" title="Comentário para Trabalhando com JSON no PHP">Nenhum comentário</a></p>
+           <div class="post-excerpt"><p>JavaScript Object Notation (JSON) é um formato leve para transferência de dados, este formato é um subconjunto da notação de objeto de JavaScript, mas seu uso não requer JavaScript exclusivamente.<br>
+Se você acompanhou o artigo sobre Serialização de dados no PHP não terá dificuldades para entender como funciona o processo de codificação e decodificação, afinal o que fazemos é serializar informações/dados, mas diferente da serialização apresentada anteriormente, podemos manipular informações codificadas/serializadas em formato JSON no lado do cliente utilizando JavaScript.<br>
+A simplicidade de JSON tem resultado em seu uso difundido, especialmente como uma alternativa para XML em AJAX. Normalmente é utilizado em ambientes onde o tamanho do fluxo de dados entre o cliente e o servidor é de supra importância, por exemplo Google, Yahoo e etc, servindo milhões de usuários, onde a perda dos recursos de processamento XSLT no lado cliente para manipulação de dados ou geração da interface, não é uma consideração.</p>
+</div>
+  	 </div>
+         <!-- /short post -->
+                <!-- short post -->
+         <div id="post-1701" class="hentry post post-7 odd author-admin category-php post_tag-data post_tag-date post_tag-dateinterval post_tag-dateperiod post_tag-datetime post_tag-datetimezone post_tag-format post_tag-mktime post_tag-operacoes post_tag-php post_tag-strtotime post_tag-time post_tag-timestamp">
+           	   	   <h3 class="title"><a href="http://www.diogomatheus.com.br/blog/php/trabalhando-com-datas-no-php/" rel="bookmark" title="Permanent Link to Trabalhando com datas no PHP">Trabalhando com datas no PHP</a></h3>
+           <p class="post-short-info"><strong>há 2 anos atrás</strong> - <a href="http://www.diogomatheus.com.br/blog/php/trabalhando-com-datas-no-php/#comments" title="Comentário para Trabalhando com datas no PHP">7 comentários</a></p>
+           <div class="post-excerpt"><p>Trabalhar com manipulação de datas no PHP já foi uma grande dor de cabeça, antigamente era necessário decorar diversas funções e mesmo assim não era possível realizar algumas operações, como por exemplo, comparação de datas.<br>
+Neste artigo iremos conhecer algumas funções antigas, mas vamos focar na classe DateTime, que a partir da versão 5.3 do PHP apresentou funcionalidades interessantes. Independente do recurso utilizado, precisamos conhecer alguns conceitos que estão presente em ambas as opções, como os parâmetros utilizados para formatação de datas.</p>
+</div>
+  	 </div>
+         <!-- /short post -->
+                <!-- short post -->
+         <div id="post-1709" class="hentry post post-8 even alt author-admin category-php post_tag-array post_tag-classe post_tag-objeto post_tag-php post_tag-restauracao post_tag-serializacao post_tag-serialize post_tag-unserialize post_tag-__sleep post_tag-__wakeup">
+           	   	   <h3 class="title"><a href="http://www.diogomatheus.com.br/blog/php/serializacao-de-dados-no-php/" rel="bookmark" title="Permanent Link to Serialização de dados no PHP">Serialização de dados no PHP</a></h3>
+           <p class="post-short-info"><strong>há 2 anos atrás</strong> - <a href="http://www.diogomatheus.com.br/blog/php/serializacao-de-dados-no-php/#comments" title="Comentário para Serialização de dados no PHP">4 comentários</a></p>
+           <div class="post-excerpt"><p>Em ciência da computação, no contexto de armazenamento e transmissão de dados, serialização é o processo de salvar um objeto em um meio de armazenamento, ou transmiti-lo por uma conexão de rede, seja em forma binária ou em formato de texto. Esta série de bytes pode ser usada para recriar um objeto com o mesmo…</p>
+</div>
+  	 </div>
+         <!-- /short post -->
+                <!-- short post -->
+         <div id="post-1565" class="hentry post post-9 odd author-admin category-php post_tag-autocommit post_tag-banco-de-dados post_tag-pdo post_tag-php post_tag-php-data-object post_tag-sql post_tag-transacoes">
+           	   	   <h3 class="title"><a href="http://www.diogomatheus.com.br/blog/php/trabalhando-com-pdo-no-php/" rel="bookmark" title="Permanent Link to Trabalhando com PDO no PHP">Trabalhando com PDO no PHP</a></h3>
+           <p class="post-short-info"><strong>há 2 anos atrás</strong> - <a href="http://www.diogomatheus.com.br/blog/php/trabalhando-com-pdo-no-php/#comments" title="Comentário para Trabalhando com PDO no PHP">19 comentários</a></p>
+           <div class="post-excerpt"><p>PDO (PHP Data Objects) é uma extensão que fornece uma interface padronizada para trabalhar com bancos de dados, cuja finalidade é abstrair a conexão e interações com os bancos, ou seja, independente do banco de dados que estiver sendo utilizado os métodos executados serão os mesmos, mas isso não significa que seu sistema será portável entre diversos bancos de dados, por mais que o uso do PDO facilite a portabilidade, esta interface significa apenas que você se comunicará com qualquer banco de dados através de um determinado conjunto de métodos e classes.<br>
+Não é possível executar funções de interação com o banco de dados utilizando somente a extensão PDO, é preciso utilizar um driver específico do PDO para acessar um determinado banco de dados. Cada banco de dados pode prover um driver para PDO, porém nem todos os recursos são suportados em todos os bancos, por exemplo, no MySQL, tabelas do tipo MyISAM não suportam transações, impossibilitando o funcionamento dos métodos PDO::beginTransaction(), PDO::commit() e PDO::rollBack().</p>
+</div>
+  	 </div>
+         <!-- /short post -->
+                <!-- short post -->
+         <div id="post-1446" class="hentry post post-10 even alt author-admin category-php post_tag-engenharia-reversa post_tag-php post_tag-reflection">
+           	   	   <h3 class="title"><a href="http://www.diogomatheus.com.br/blog/php/entendendo-reflection-no-php/" rel="bookmark" title="Permanent Link to Entendendo reflection no PHP">Entendendo reflection no PHP</a></h3>
+           <p class="post-short-info"><strong>há 2 anos atrás</strong> - <a href="http://www.diogomatheus.com.br/blog/php/entendendo-reflection-no-php/#comments" title="Comentário para Entendendo reflection no PHP">3 comentários</a></p>
+           <div class="post-excerpt"><p>Reflection (em português: reflexão) é o processo em que um programa pode observar e modificar sua própria estrutura, no PHP este recurso foi adicionado após a reformulação da orientação a objeto na linguagem, na versão 5, possibilitando realizar engenharia reversa em classes, interfaces, funções e extensões, além disso também podemos resgatar comentários/documentação de funções, classes e métodos.</p>
+</div>
+  	 </div>
+         <!-- /short post -->
+                <!-- short post -->
+         <div id="post-1393" class="hentry post post-11 odd author-admin category-php post_tag-ereg post_tag-expressoes-regulares post_tag-metacaracteres post_tag-pcre post_tag-php post_tag-posix post_tag-preg">
+           	   	   <h3 class="title"><a href="http://www.diogomatheus.com.br/blog/php/expressoes-regulares-no-php/" rel="bookmark" title="Permanent Link to Expressões regulares no PHP">Expressões regulares no PHP</a></h3>
+           <p class="post-short-info"><strong>há 2 anos atrás</strong> - <a href="http://www.diogomatheus.com.br/blog/php/expressoes-regulares-no-php/#comments" title="Comentário para Expressões regulares no PHP">11 comentários</a></p>
+           <div class="post-excerpt"><p>Expressão regular é uma forma de se especificar um padrão de texto e pode ser composta por símbolos, caracteres literais e caracteres com funções especiais, que agrupados formam uma expressão. Essa expressão é interpretada como uma regra, onde uma entrada de dados qualquer é bem sucedida somente se obedecer a essa regra.<br>
+Didaticamente podemos comparar expressões regulares com o brinquedo LEGO, onde temos várias opções de peças disponíveis e de diferentes tipos, que juntas possibilitam a construção de estruturas complexas.</p>
+</div>
+  	 </div>
+         <!-- /short post -->
+          </div>
+  <!-- /related posts -->
+  
+ </div>
+ <!-- /tab sections -->
+
+</div>
+<!-- /tabbed content -->
+
+            </div>
+    </div>
+    <!-- /primary content -->
+
+    
+<div id="sidebar" role="complementary">
+ <ul class="blocks">
+        <li class="block"><div class="block-widget_text clear-block" id="instance-text-3"><h3 class="title"><span>Certificações</span></h3><div class="block-div"></div><div class="block-div-arrow"></div>    <div class="textwidget"><div style="text-align: center;">
+<a href="http://www.zend.com/en/store/education/certification/authenticate.php/ClientCandidateID/ZEND019650/RegistrationID/247898363" target="_blank">
+<img class="size-full wp-image-1903 aligncenter" title="Zend Certified Engineer PHP 5.3" src="./Depuração de aplicações PHP com XDebug   Diogo Matheus Blog_files/zce_php5-3_logo.gif" alt="Zend Certified Engineer PHP 5.3" width="73" height="68">
+</a>
+</div></div>
+    </div></li><li class="block"><div class="block-widget_search clear-block" id="instance-search-3"><h3 class="title"><span>Pesquisar</span></h3><div class="block-div"></div><div class="block-div-arrow"></div>
+<!-- search form -->
+<div class="search-form">
+  <form method="get" id="searchform" action="http://www.diogomatheus.com.br/blog/" class="clear-block" role="search">
+    <fieldset>
+      <div id="searchfield">
+       <input type="text" name="s" id="searchbox" class="text clearField clearFieldBlurred" value="Pesquisar" rel="Pesquisar">
+      </div>
+      <input type="submit" value="" class="submit">
+     </fieldset>
+ </form>
+</div>
+<!-- /search form -->
+</div></li><li class="block"><div class="block-sidebar_tabs clear-block" id="instance-sidebartabswidget-3">            <!-- tabbed content -->
+      <div class="tabbed-content sidebar-tabs clear-block" id="sidebartabswidget-3">
+
+       <!-- tab navigation (items must be in reverse order because of the tab-design) -->
+       <ul class="box-tabs clear-block">
+          <li class="recentcomm"><a href="http://www.diogomatheus.com.br/blog/php/depuracao-de-aplicacoes-php-com-xdebug/#sidebartabswidget-3-section-recentcomments" title="Comentários recentes"><span>Comentários recentes</span></a></li>          <li class="popular"><a href="http://www.diogomatheus.com.br/blog/php/depuracao-de-aplicacoes-php-com-xdebug/#sidebartabswidget-3-section-popular" title="Artigos populares"><span>Artigos populares</span></a></li>          <li class="archives"><a href="http://www.diogomatheus.com.br/blog/php/depuracao-de-aplicacoes-php-com-xdebug/#sidebartabswidget-3-section-archives" title="Arquivos"><span>Arquivos</span></a></li>          <li class="tags"><a href="http://www.diogomatheus.com.br/blog/php/depuracao-de-aplicacoes-php-com-xdebug/#sidebartabswidget-3-section-tags" title="Marcadores"><span>Marcadores</span></a></li>          <li class="categories active"><a href="http://www.diogomatheus.com.br/blog/php/depuracao-de-aplicacoes-php-com-xdebug/#sidebartabswidget-3-section-categories" title="Categorias"><span>Categorias</span></a></li>       </ul>
+       <!-- /tab nav -->
+
+       <!-- tab sections -->
+       <div class="sections">
+
+                <!-- comments -->
+
+         <div class="box section" id="sidebartabswidget-3-section-categories" style="display: block;">
+          <div class="box-top-left"><div class="box-top-right"></div></div>
+          <div class="box-main">
+           <div class="box-content">
+            <ul class="menuList categories">
+             	<li class="cat-item cat-item-141"><a href="http://www.diogomatheus.com.br/blog/category/certificacoes/" title="Artigos e dicas sobre certificações." class="fadeThis"><span class="entry">Certificações <span class="details inline">(2)</span></span><span class="hover" style="opacity: 0;"></span></a><a class="rss bubble" href="http://www.diogomatheus.com.br/blog/category/certificacoes/feed/" title="XML"></a>
+</li>
+	<li class="cat-item cat-item-112"><a href="http://www.diogomatheus.com.br/blog/category/eventos/" title="Informações e opiniões sobre paletras, conferências, etc." class="fadeThis"><span class="entry">Eventos <span class="details inline">(3)</span></span><span class="hover" style="opacity: 0;"></span></a><a class="rss bubble" href="http://www.diogomatheus.com.br/blog/category/eventos/feed/" title="XML"></a>
+</li>
+	<li class="cat-item cat-item-250"><a href="http://www.diogomatheus.com.br/blog/category/gerenciamento-de-projetos/" title="Artigos e dicas sobre gerenciamento de projetos." class="fadeThis"><span class="entry">Gerenciamento de Projetos <span class="details inline">(8)</span></span><span class="hover" style="opacity: 0;"></span></a><a class="rss bubble" href="http://www.diogomatheus.com.br/blog/category/gerenciamento-de-projetos/feed/" title="XML"></a>
+</li>
+	<li class="cat-item cat-item-5"><a href="http://www.diogomatheus.com.br/blog/category/jquery/" title="Artigos e dicas sobre jQuery." class="fadeThis"><span class="entry">jQuery <span class="details inline">(2)</span></span><span class="hover" style="opacity: 0;"></span></a><a class="rss bubble" href="http://www.diogomatheus.com.br/blog/category/jquery/feed/" title="XML"></a>
+</li>
+	<li class="cat-item cat-item-294"><a href="http://www.diogomatheus.com.br/blog/category/orientacao-a-objetos/" title="Artigos e dicas sobre orientação a objetos." class="fadeThis"><span class="entry">Orientação a Objetos <span class="details inline">(3)</span></span><span class="hover" style="opacity: 0;"></span></a><a class="rss bubble" href="http://www.diogomatheus.com.br/blog/category/orientacao-a-objetos/feed/" title="XML"></a>
+</li>
+	<li class="cat-item cat-item-1"><a href="http://www.diogomatheus.com.br/blog/category/php/" title="Artigos e dicas sobre PHP." class="fadeThis"><span class="entry">PHP <span class="details inline">(22)</span></span><span class="hover" style="opacity: 0;"></span></a><a class="rss bubble" href="http://www.diogomatheus.com.br/blog/category/php/feed/" title="XML"></a>
+</li>
+	<li class="cat-item cat-item-217"><a href="http://www.diogomatheus.com.br/blog/category/resenha-de-livros/" title="Resenha sobre as últimas leituras." class="fadeThis" style="padding-left: 0px;"><span class="entry">Resenha <span class="details inline">(7)</span></span><span class="hover" style="opacity: 0;"></span></a><a class="rss bubble" href="http://www.diogomatheus.com.br/blog/category/resenha-de-livros/feed/" title="XML" style="display: none; opacity: 0; top: -10px;"></a>
+</li>
+	<li class="cat-item cat-item-383"><a href="http://www.diogomatheus.com.br/blog/category/ubuntu/" title="Artigos e dicas sobre Ubuntu." class="fadeThis"><span class="entry">Ubuntu <span class="details inline">(1)</span></span><span class="hover" style="opacity: 0;"></span></a><a class="rss bubble" href="http://www.diogomatheus.com.br/blog/category/ubuntu/feed/" title="XML"></a>
+</li>
+	<li class="cat-item cat-item-4"><a href="http://www.diogomatheus.com.br/blog/category/xhtml-css/" title="Artigos e dicas sobre XHTML e CSS." class="fadeThis"><span class="entry">XHTML &amp; CSS <span class="details inline">(1)</span></span><span class="hover" style="opacity: 0;"></span></a><a class="rss bubble" href="http://www.diogomatheus.com.br/blog/category/xhtml-css/feed/" title="XML"></a>
+</li>
+	<li class="cat-item cat-item-3"><a href="http://www.diogomatheus.com.br/blog/category/zend-framework/" title="Artigos e dicas sobre Zend Framework." class="fadeThis" style="padding-left: 0px;"><span class="entry">Zend Framework <span class="details inline">(13)</span></span><span class="hover" style="opacity: 0;"></span></a><a class="rss bubble" href="http://www.diogomatheus.com.br/blog/category/zend-framework/feed/" title="XML" style="display: none; opacity: 0; top: -10px;"></a>
+</li>
+            </ul>
+           </div>
+          </div>
+         </div>
+
+        
+        
+         <div class="box section" id="sidebartabswidget-3-section-tags" style="display: none;">
+          <div class="box-top-left"><div class="box-top-right"></div></div>
+          <div class="box-main">
+           <div class="box-content">
+            <div class="tag-cloud">
+             <a href="http://www.diogomatheus.com.br/blog/tag/ambiente/" class="tag-link-387" title="2 posts" style="font-size: 8pt;">Ambiente</a>
+<a href="http://www.diogomatheus.com.br/blog/tag/analise/" class="tag-link-365" title="2 posts" style="font-size: 8pt;">Análise</a>
+<a href="http://www.diogomatheus.com.br/blog/tag/array/" class="tag-link-79" title="3 posts" style="font-size: 9.82608695652pt;">array</a>
+<a href="http://www.diogomatheus.com.br/blog/tag/classe/" class="tag-link-179" title="3 posts" style="font-size: 9.82608695652pt;">classe</a>
+<a href="http://www.diogomatheus.com.br/blog/tag/classes/" class="tag-link-150" title="3 posts" style="font-size: 9.82608695652pt;">Classes</a>
+<a href="http://www.diogomatheus.com.br/blog/tag/colaboracao/" class="tag-link-271" title="2 posts" style="font-size: 8pt;">Colaboração</a>
+<a href="http://www.diogomatheus.com.br/blog/tag/componentes/" class="tag-link-134" title="2 posts" style="font-size: 8pt;">componentes</a>
+<a href="http://www.diogomatheus.com.br/blog/tag/conhecimento/" class="tag-link-254" title="2 posts" style="font-size: 8pt;">Conhecimento</a>
+<a href="http://www.diogomatheus.com.br/blog/tag/codigo-limpo/" class="tag-link-212" title="4 posts" style="font-size: 11.347826087pt;">Código Limpo</a>
+<a href="http://www.diogomatheus.com.br/blog/tag/desenvolvimento/" class="tag-link-230" title="2 posts" style="font-size: 8pt;">Desenvolvimento</a>
+<a href="http://www.diogomatheus.com.br/blog/tag/equipe/" class="tag-link-251" title="2 posts" style="font-size: 8pt;">Equipe</a>
+<a href="http://www.diogomatheus.com.br/blog/tag/escopo/" class="tag-link-341" title="3 posts" style="font-size: 9.82608695652pt;">Escopo</a>
+<a href="http://www.diogomatheus.com.br/blog/tag/eventos/" class="tag-link-112" title="2 posts" style="font-size: 8pt;">Eventos</a>
+<a href="http://www.diogomatheus.com.br/blog/tag/ferramentas/" class="tag-link-257" title="2 posts" style="font-size: 8pt;">Ferramentas</a>
+<a href="http://www.diogomatheus.com.br/blog/tag/funcoes/" class="tag-link-106" title="2 posts" style="font-size: 8pt;">funções</a>
+<a href="http://www.diogomatheus.com.br/blog/tag/gerenciamento/" class="tag-link-272" title="2 posts" style="font-size: 8pt;">Gerenciamento</a>
+<a href="http://www.diogomatheus.com.br/blog/tag/gerenciamento-de-projetos/" class="tag-link-250" title="6 posts" style="font-size: 13.6304347826pt;">Gerenciamento de Projetos</a>
+<a href="http://www.diogomatheus.com.br/blog/tag/gestao/" class="tag-link-253" title="2 posts" style="font-size: 8pt;">Gestão</a>
+<a href="http://www.diogomatheus.com.br/blog/tag/inovacao/" class="tag-link-289" title="3 posts" style="font-size: 9.82608695652pt;">Inovação</a>
+<a href="http://www.diogomatheus.com.br/blog/tag/interface/" class="tag-link-299" title="2 posts" style="font-size: 8pt;">Interface</a>
+<a href="http://www.diogomatheus.com.br/blog/tag/interfaces/" class="tag-link-149" title="2 posts" style="font-size: 8pt;">Interfaces</a>
+<a href="http://www.diogomatheus.com.br/blog/tag/introducao/" class="tag-link-8" title="3 posts" style="font-size: 9.82608695652pt;">Introdução</a>
+<a href="http://www.diogomatheus.com.br/blog/tag/javascript/" class="tag-link-191" title="2 posts" style="font-size: 8pt;">JavaScript</a>
+<a href="http://www.diogomatheus.com.br/blog/tag/jquery/" class="tag-link-5" title="4 posts" style="font-size: 11.347826087pt;">jQuery</a>
+<a href="http://www.diogomatheus.com.br/blog/tag/linux/" class="tag-link-386" title="2 posts" style="font-size: 8pt;">Linux</a>
+<a href="http://www.diogomatheus.com.br/blog/tag/modelos/" class="tag-link-31" title="6 posts" style="font-size: 13.6304347826pt;">modelos</a>
+<a href="http://www.diogomatheus.com.br/blog/tag/moodle/" class="tag-link-211" title="2 posts" style="font-size: 8pt;">Moodle</a>
+<a href="http://www.diogomatheus.com.br/blog/tag/mudanca/" class="tag-link-450" title="2 posts" style="font-size: 8pt;">mudança</a>
+<a href="http://www.diogomatheus.com.br/blog/tag/objeto/" class="tag-link-178" title="2 posts" style="font-size: 8pt;">objeto</a>
+<a href="http://www.diogomatheus.com.br/blog/tag/orientacao-a-objetos/" class="tag-link-294" title="2 posts" style="font-size: 8pt;">Orientação a Objetos</a>
+<a href="http://www.diogomatheus.com.br/blog/tag/palestras/" class="tag-link-209" title="2 posts" style="font-size: 8pt;">Palestras</a>
+<a href="http://www.diogomatheus.com.br/blog/tag/php/" class="tag-link-1" title="24 posts" style="font-size: 22pt;">PHP</a>
+<a href="http://www.diogomatheus.com.br/blog/tag/planejamento/" class="tag-link-330" title="2 posts" style="font-size: 8pt;">Planejamento</a>
+<a href="http://www.diogomatheus.com.br/blog/tag/pmbok/" class="tag-link-291" title="2 posts" style="font-size: 8pt;">PMBOK</a>
+<a href="http://www.diogomatheus.com.br/blog/tag/projeto/" class="tag-link-252" title="4 posts" style="font-size: 11.347826087pt;">Projeto</a>
+<a href="http://www.diogomatheus.com.br/blog/tag/resenha-de-livros/" class="tag-link-217" title="2 posts" style="font-size: 8pt;">Resenha</a>
+<a href="http://www.diogomatheus.com.br/blog/tag/serializacao/" class="tag-link-180" title="2 posts" style="font-size: 8pt;">serialização</a>
+<a href="http://www.diogomatheus.com.br/blog/tag/software/" class="tag-link-277" title="3 posts" style="font-size: 9.82608695652pt;">Software</a>
+<a href="http://www.diogomatheus.com.br/blog/tag/string/" class="tag-link-69" title="3 posts" style="font-size: 9.82608695652pt;">string</a>
+<a href="http://www.diogomatheus.com.br/blog/tag/tarefas/" class="tag-link-273" title="2 posts" style="font-size: 8pt;">Tarefas</a>
+<a href="http://www.diogomatheus.com.br/blog/tag/wamp/" class="tag-link-21" title="3 posts" style="font-size: 9.82608695652pt;">wamp</a>
+<a href="http://www.diogomatheus.com.br/blog/tag/wiki/" class="tag-link-256" title="2 posts" style="font-size: 8pt;">Wiki</a>
+<a href="http://www.diogomatheus.com.br/blog/tag/zend-framework/" class="tag-link-3" title="14 posts" style="font-size: 18.652173913pt;">Zend Framework</a>
+<a href="http://www.diogomatheus.com.br/blog/tag/zend_paginator/" class="tag-link-88" title="2 posts" style="font-size: 8pt;">Zend_Paginator</a>
+<a href="http://www.diogomatheus.com.br/blog/tag/zf2/" class="tag-link-116" title="2 posts" style="font-size: 8pt;">ZF2</a>            </div>
+           </div>
+          </div>
+         </div>
+
+       
+        
+         <div class="box section" id="sidebartabswidget-3-section-archives" style="display: none;">
+          <div class="box-top-left"><div class="box-top-right"></div></div>
+          <div class="box-main">
+           <div class="box-content">
+            <ul class="menuList">
+      	     	<li><a href="http://www.diogomatheus.com.br/blog/2015/01/" title="janeiro 2015" class="fadeThis"><span class="entry">janeiro 2015 <span class="details inline">(1)</span></span><span class="hover" style="opacity: 0;"></span></a></li>
+	<li><a href="http://www.diogomatheus.com.br/blog/2014/11/" title="novembro 2014" class="fadeThis"><span class="entry">novembro 2014 <span class="details inline">(1)</span></span><span class="hover" style="opacity: 0;"></span></a></li>
+	<li><a href="http://www.diogomatheus.com.br/blog/2014/09/" title="setembro 2014" class="fadeThis"><span class="entry">setembro 2014 <span class="details inline">(2)</span></span><span class="hover" style="opacity: 0;"></span></a></li>
+	<li><a href="http://www.diogomatheus.com.br/blog/2014/08/" title="agosto 2014" class="fadeThis"><span class="entry">agosto 2014 <span class="details inline">(1)</span></span><span class="hover" style="opacity: 0;"></span></a></li>
+	<li><a href="http://www.diogomatheus.com.br/blog/2014/06/" title="junho 2014" class="fadeThis"><span class="entry">junho 2014 <span class="details inline">(1)</span></span><span class="hover" style="opacity: 0;"></span></a></li>
+	<li><a href="http://www.diogomatheus.com.br/blog/2014/03/" title="março 2014" class="fadeThis"><span class="entry">março 2014 <span class="details inline">(1)</span></span><span class="hover" style="opacity: 0;"></span></a></li>
+	<li><a href="http://www.diogomatheus.com.br/blog/2013/11/" title="novembro 2013" class="fadeThis"><span class="entry">novembro 2013 <span class="details inline">(2)</span></span><span class="hover" style="opacity: 0;"></span></a></li>
+	<li><a href="http://www.diogomatheus.com.br/blog/2013/08/" title="agosto 2013" class="fadeThis"><span class="entry">agosto 2013 <span class="details inline">(2)</span></span><span class="hover" style="opacity: 0;"></span></a></li>
+	<li><a href="http://www.diogomatheus.com.br/blog/2013/07/" title="julho 2013" class="fadeThis"><span class="entry">julho 2013 <span class="details inline">(2)</span></span><span class="hover" style="opacity: 0;"></span></a></li>
+	<li><a href="http://www.diogomatheus.com.br/blog/2013/06/" title="junho 2013" class="fadeThis"><span class="entry">junho 2013 <span class="details inline">(2)</span></span><span class="hover" style="opacity: 0;"></span></a></li>
+	<li><a href="http://www.diogomatheus.com.br/blog/2013/05/" title="maio 2013" class="fadeThis"><span class="entry">maio 2013 <span class="details inline">(1)</span></span><span class="hover" style="opacity: 0;"></span></a></li>
+	<li><a href="http://www.diogomatheus.com.br/blog/2013/04/" title="abril 2013" class="fadeThis"><span class="entry">abril 2013 <span class="details inline">(2)</span></span><span class="hover" style="opacity: 0;"></span></a></li>
+	<li><a href="http://www.diogomatheus.com.br/blog/2013/02/" title="fevereiro 2013" class="fadeThis"><span class="entry">fevereiro 2013 <span class="details inline">(1)</span></span><span class="hover" style="opacity: 0;"></span></a></li>
+	<li><a href="http://www.diogomatheus.com.br/blog/2013/01/" title="janeiro 2013" class="fadeThis"><span class="entry">janeiro 2013 <span class="details inline">(1)</span></span><span class="hover" style="opacity: 0;"></span></a></li>
+	<li><a href="http://www.diogomatheus.com.br/blog/2012/11/" title="novembro 2012" class="fadeThis"><span class="entry">novembro 2012 <span class="details inline">(3)</span></span><span class="hover" style="opacity: 0;"></span></a></li>
+	<li><a href="http://www.diogomatheus.com.br/blog/2012/10/" title="outubro 2012" class="fadeThis"><span class="entry">outubro 2012 <span class="details inline">(1)</span></span><span class="hover" style="opacity: 0;"></span></a></li>
+	<li><a href="http://www.diogomatheus.com.br/blog/2012/08/" title="agosto 2012" class="fadeThis"><span class="entry">agosto 2012 <span class="details inline">(2)</span></span><span class="hover" style="opacity: 0;"></span></a></li>
+	<li><a href="http://www.diogomatheus.com.br/blog/2012/06/" title="junho 2012" class="fadeThis"><span class="entry">junho 2012 <span class="details inline">(2)</span></span><span class="hover" style="opacity: 0;"></span></a></li>
+	<li><a href="http://www.diogomatheus.com.br/blog/2012/05/" title="maio 2012" class="fadeThis"><span class="entry">maio 2012 <span class="details inline">(1)</span></span><span class="hover" style="opacity: 0;"></span></a></li>
+	<li><a href="http://www.diogomatheus.com.br/blog/2012/04/" title="abril 2012" class="fadeThis"><span class="entry">abril 2012 <span class="details inline">(1)</span></span><span class="hover" style="opacity: 0;"></span></a></li>
+	<li><a href="http://www.diogomatheus.com.br/blog/2012/03/" title="março 2012" class="fadeThis"><span class="entry">março 2012 <span class="details inline">(4)</span></span><span class="hover" style="opacity: 0;"></span></a></li>
+	<li><a href="http://www.diogomatheus.com.br/blog/2012/02/" title="fevereiro 2012" class="fadeThis"><span class="entry">fevereiro 2012 <span class="details inline">(2)</span></span><span class="hover" style="opacity: 0;"></span></a></li>
+	<li><a href="http://www.diogomatheus.com.br/blog/2011/12/" title="dezembro 2011" class="fadeThis"><span class="entry">dezembro 2011 <span class="details inline">(1)</span></span><span class="hover" style="opacity: 0;"></span></a></li>
+	<li><a href="http://www.diogomatheus.com.br/blog/2011/11/" title="novembro 2011" class="fadeThis"><span class="entry">novembro 2011 <span class="details inline">(2)</span></span><span class="hover" style="opacity: 0;"></span></a></li>
+	<li><a href="http://www.diogomatheus.com.br/blog/2011/10/" title="outubro 2011" class="fadeThis"><span class="entry">outubro 2011 <span class="details inline">(3)</span></span><span class="hover" style="opacity: 0;"></span></a></li>
+	<li><a href="http://www.diogomatheus.com.br/blog/2011/09/" title="setembro 2011" class="fadeThis"><span class="entry">setembro 2011 <span class="details inline">(3)</span></span><span class="hover" style="opacity: 0;"></span></a></li>
+	<li><a href="http://www.diogomatheus.com.br/blog/2011/07/" title="julho 2011" class="fadeThis"><span class="entry">julho 2011 <span class="details inline">(1)</span></span><span class="hover" style="opacity: 0;"></span></a></li>
+	<li><a href="http://www.diogomatheus.com.br/blog/2011/06/" title="junho 2011" class="fadeThis"><span class="entry">junho 2011 <span class="details inline">(2)</span></span><span class="hover" style="opacity: 0;"></span></a></li>
+	<li><a href="http://www.diogomatheus.com.br/blog/2011/05/" title="maio 2011" class="fadeThis"><span class="entry">maio 2011 <span class="details inline">(4)</span></span><span class="hover" style="opacity: 0;"></span></a></li>
+	<li><a href="http://www.diogomatheus.com.br/blog/2011/04/" title="abril 2011" class="fadeThis"><span class="entry">abril 2011 <span class="details inline">(1)</span></span><span class="hover" style="opacity: 0;"></span></a></li>
+	<li><a href="http://www.diogomatheus.com.br/blog/2011/03/" title="março 2011" class="fadeThis"><span class="entry">março 2011 <span class="details inline">(4)</span></span><span class="hover" style="opacity: 0;"></span></a></li>
+	<li><a href="http://www.diogomatheus.com.br/blog/2011/02/" title="fevereiro 2011" class="fadeThis"><span class="entry">fevereiro 2011 <span class="details inline">(1)</span></span><span class="hover" style="opacity: 0;"></span></a></li>
+	<li><a href="http://www.diogomatheus.com.br/blog/2010/05/" title="maio 2010" class="fadeThis"><span class="entry">maio 2010 <span class="details inline">(3)</span></span><span class="hover" style="opacity: 0;"></span></a></li>
+            </ul>
+           </div>
+          </div>
+         </div>
+
+       
+        
+         <div class="box section" id="sidebartabswidget-3-section-popular" style="display: none;">
+          <div class="box-top-left"><div class="box-top-right"></div></div>
+          <div class="box-main">
+           <div class="box-content">
+                          <ul class="menuList">               <li><a class="fadeThis" href="http://www.diogomatheus.com.br/blog/php/configurando-o-php-para-enviar-email-no-windows-atraves-do-gmail/" rel="bookmark" title="Configurando o PHP para enviar email no windows através do gmail"><span class="entry">Configurando o PHP para enviar email no windows através do gmail <span class="details inline">(39)</span></span><span class="hover" style="opacity: 0;"></span></a></li>               <li><a class="fadeThis" href="http://www.diogomatheus.com.br/blog/zend-framework/preparando-o-ambiente-para-desenvolvimento-com-zend-framework/" rel="bookmark" title="Preparando o ambiente para desenvolvimento com zend framework"><span class="entry">Preparando o ambiente para desenvolvimento com zend framework <span class="details inline">(27)</span></span><span class="hover" style="opacity: 0;"></span></a></li>               <li><a class="fadeThis" href="http://www.diogomatheus.com.br/blog/zend-framework/mapeando-relacionamentos-os-modelos/" rel="bookmark" title="Mapeando relacionamentos nos modelos"><span class="entry">Mapeando relacionamentos nos modelos <span class="details inline">(27)</span></span><span class="hover" style="opacity: 0;"></span></a></li>               <li><a class="fadeThis" href="http://www.diogomatheus.com.br/blog/php/trabalhando-com-pdo-no-php/" rel="bookmark" title="Trabalhando com PDO no PHP"><span class="entry">Trabalhando com PDO no PHP <span class="details inline">(19)</span></span><span class="hover" style="opacity: 0;"></span></a></li>               <li><a class="fadeThis" href="http://www.diogomatheus.com.br/blog/zend-framework/zend-view-helpers-e-zend-action-helpers/" rel="bookmark" title="Zend View Helpers e Zend Action Helpers"><span class="entry">Zend View Helpers e Zend Action Helpers <span class="details inline">(14)</span></span><span class="hover" style="opacity: 0;"></span></a></li>               <li><a class="fadeThis" href="http://www.diogomatheus.com.br/blog/zend-framework/trabalhando-com-paginacao-usando-zend_paginator/" rel="bookmark" title="Trabalhando com paginação usando Zend_Paginator"><span class="entry">Trabalhando com paginação usando Zend_Paginator <span class="details inline">(13)</span></span><span class="hover" style="opacity: 0;"></span></a></li>               <li><a class="fadeThis" href="http://www.diogomatheus.com.br/blog/php/expressoes-regulares-no-php/" rel="bookmark" title="Expressões regulares no PHP"><span class="entry">Expressões regulares no PHP <span class="details inline">(11)</span></span><span class="hover" style="opacity: 0;"></span></a></li>               <li><a class="fadeThis" href="http://www.diogomatheus.com.br/blog/zend-framework/zend-controller-e-zend-view-entendendo-controllers-e-views-no-zend-framework/" rel="bookmark" title="Zend Controller e Zend View – Entendendo controllers e views no zend framework"><span class="entry">Zend Controller e Zend View – Entendendo controllers e views no zend framework <span class="details inline">(10)</span></span><span class="hover" style="opacity: 0;"></span></a></li>               <li><a class="fadeThis" href="http://www.diogomatheus.com.br/blog/php/variaveis-e-constantes-no-php/" rel="bookmark" title="Variáveis e Constantes no PHP"><span class="entry">Variáveis e Constantes no PHP <span class="details inline">(10)</span></span><span class="hover" style="opacity: 0;"></span></a></li>               <li><a class="fadeThis" href="http://www.diogomatheus.com.br/blog/certificacoes/zend-certified-engineer-php-5-3/" rel="bookmark" title="Zend Certified Engineer PHP 5.3"><span class="entry">Zend Certified Engineer PHP 5.3 <span class="details inline">(9)</span></span><span class="hover" style="opacity: 0;"></span></a></li>              </ul>            </div>
+          </div>
+         </div>
+
+       
+       
+         <div class="box section" id="sidebartabswidget-3-section-recentcomments" style="display: none;">
+          <div class="box-top-left"><div class="box-top-right"></div></div>
+          <div class="box-main">
+           <div class="box-content">
+
+            <ul class="menuList recentcomm">
+                            <li class="clear-block"><a title="Escrito em: Configurando o PHP para enviar email no windows através do gmail" class="fadeThis" href="http://www.diogomatheus.com.br/blog/php/configurando-o-php-para-enviar-email-no-windows-atraves-do-gmail/comment-page-1/#comment-314919"><span class="avatar"><img alt="" src="./Depuração de aplicações PHP com XDebug   Diogo Matheus Blog_files/a50734c1ecf080c4137aa420b9b94677" class="avatar avatar-32 photo" height="32" width="32"></span><span class="entry">Pedro Queiroz: <span class="details"> No meu caso, usando o Windows 7 pro 64, Apache 2.2 e PHP 5 para dar certo, não fiz nenhuma ...</span></span><span class="hover" style="opacity: 0;"></span></a></li>
+                               <li class="clear-block"><a title="Escrito em: Depuração de aplicações PHP com XDebug" class="fadeThis" href="http://www.diogomatheus.com.br/blog/php/depuracao-de-aplicacoes-php-com-xdebug/comment-page-1/#comment-312455"><span class="avatar"><img alt="" src="./Depuração de aplicações PHP com XDebug   Diogo Matheus Blog_files/7c1f49d24dd5ab52e8246f34a277860f(1)" class="avatar avatar-32 photo" height="32" width="32"></span><span class="entry">Aily: <span class="details"> olá Diogo Matheus, cara você já usou o PhpDesigner? se usou teria noção de como configurar o xdebug ...</span></span><span class="hover" style="opacity: 0;"></span></a></li>
+                               <li class="clear-block"><a title="Escrito em: Funções anônimas – Lambda e Closure no PHP" class="fadeThis" href="http://www.diogomatheus.com.br/blog/php/funcoes-anonimas-lambda-e-closure-no-php/comment-page-1/#comment-312447"><span class="avatar"><img alt="" src="./Depuração de aplicações PHP com XDebug   Diogo Matheus Blog_files/7c1f49d24dd5ab52e8246f34a277860f(1)" class="avatar avatar-32 photo" height="32" width="32"></span><span class="entry">Aily: <span class="details"> muito bom, você fez o teste na prática para saber se é mais rápido mesmo??</span></span><span class="hover" style="opacity: 0;"></span></a></li>
+                               <li class="clear-block"><a title="Escrito em: Entendendo namespaces no PHP" class="fadeThis" href="http://www.diogomatheus.com.br/blog/php/entendendo-namespaces-no-php/comment-page-1/#comment-312349"><span class="avatar"><img alt="" src="./Depuração de aplicações PHP com XDebug   Diogo Matheus Blog_files/e515c4b2ec1391c080c1c7946d26eb23" class="avatar avatar-32 photo" height="32" width="32"></span><span class="entry">Vinicius: <span class="details"> Obrigado pelo artigo Diogo.
+
+Para quem vem de C#/Java/C++ é um alento saber que namespaces podem ...</span></span><span class="hover" style="opacity: 0;"></span></a></li>
+                               <li class="clear-block"><a title="Escrito em: Operadores Bitwise (Bit-a-Bit)" class="fadeThis" href="http://www.diogomatheus.com.br/blog/php/operadores-bitwise-bit-a-bit/comment-page-1/#comment-304260"><span class="avatar"><img alt="" src="./Depuração de aplicações PHP com XDebug   Diogo Matheus Blog_files/7bf0e861b2f12d33b70a7e79c946a57d" class="avatar avatar-32 photo" height="32" width="32"></span><span class="entry">Ziak: <span class="details"> Chique!</span></span><span class="hover" style="opacity: 0;"></span></a></li>
+                               <li class="clear-block"><a title="Escrito em: Entendendo orientação a objetos" class="fadeThis" href="http://www.diogomatheus.com.br/blog/orientacao-a-objetos/entendendo-orientacao-a-objetos/comment-page-1/#comment-303249"><span class="avatar"><img alt="" src="./Depuração de aplicações PHP com XDebug   Diogo Matheus Blog_files/b84c49603af620e09154c39a502e7736" class="avatar avatar-32 photo" height="32" width="32"></span><span class="entry">Diogo Matheus: <span class="details"> Ótimo ponto Marcelo, sua definição está correta, acredito que o modo como escrevi pode gerar con...</span></span><span class="hover" style="opacity: 0;"></span></a></li>
+                               <li class="clear-block"><a title="Escrito em: Entendendo orientação a objetos" class="fadeThis" href="http://www.diogomatheus.com.br/blog/orientacao-a-objetos/entendendo-orientacao-a-objetos/comment-page-1/#comment-303242"><span class="avatar"><img alt="" src="./Depuração de aplicações PHP com XDebug   Diogo Matheus Blog_files/30c10bc97d8061c917ad5f87ef92d611" class="avatar avatar-32 photo" height="32" width="32"></span><span class="entry">Marcelo Ribeiro da Silva: <span class="details"> Sou iniciante na linguagem PHP no modo estruturado e estou buscando conhecimento em programação o...</span></span><span class="hover" style="opacity: 0;"></span></a></li>
+                               <li class="clear-block"><a title="Escrito em: Entendendo namespaces no PHP" class="fadeThis" href="http://www.diogomatheus.com.br/blog/php/entendendo-namespaces-no-php/comment-page-1/#comment-255547"><span class="avatar"><img alt="" src="./Depuração de aplicações PHP com XDebug   Diogo Matheus Blog_files/ad516503a11cd5ca435acc9bb6523536" class="avatar avatar-32 photo avatar-default" height="32" width="32"></span><span class="entry">Namespaces no PHP: <span class="details"> [...] http://www.diogomatheus.com.br/blog/php/entendendo-namespaces-no-php/  [...]</span></span><span class="hover" style="opacity: 0;"></span></a></li>
+                           </ul>
+
+           </div>
+          </div>
+         </div>
+
+       
+       </div>
+      </div>
+      <!-- tabbed content -->
+      
+      </div></li><li class="block"><div class="block-widget_text clear-block" id="instance-text-4"><h3 class="title"><span>Tweets recentes</span></h3><div class="block-div"></div><div class="block-div-arrow"></div>    <div class="textwidget" data-twttr-id="twttr-sandbox-0"><iframe id="twitter-widget-0" scrolling="no" frameborder="0" allowtransparency="true" class="twitter-timeline twitter-timeline-rendered" allowfullscreen="" style="border: none; max-width: 100%; min-width: 180px; width: 284px;" title="Twitter Timeline" height="500"></iframe>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</div>
+    </div></li>		<li class="block"><div class="block-widget_recent_entries clear-block" id="instance-recent-posts-3">		<h3 class="title"><span>Últimos tópicos</span></h3><div class="block-div"></div><div class="block-div-arrow"></div>		<ul>
+				<li><a href="http://www.diogomatheus.com.br/blog/resenha-de-livros/wikinomics/" title="Wikinomics">Wikinomics</a></li>
+				<li><a href="http://www.diogomatheus.com.br/blog/resenha-de-livros/inovacao-como-rotina/" title="Inovação como rotina">Inovação como rotina</a></li>
+				<li><a href="http://www.diogomatheus.com.br/blog/gerenciamento-de-projetos/gerenciamento-do-valor-agregado/" title="Gerenciamento do valor agregado">Gerenciamento do valor agregado</a></li>
+				<li><a href="http://www.diogomatheus.com.br/blog/certificacoes/certificacao-pmp-tipos-de-questoes/" title="Certificação PMP – Tipos de questões">Certificação PMP – Tipos de questões</a></li>
+				<li><a href="http://www.diogomatheus.com.br/blog/gerenciamento-de-projetos/teoria-da-complexidade-visivel-em-tarefas/" title="Teoria da complexidade visível em tarefas">Teoria da complexidade visível em tarefas</a></li>
+				</ul>
+		</div></li>     </ul>
+</div>
+
+
+   </div>
+  </div>
+  <!-- /main content -->
+
+
+ 
+ <!-- footer -->
+  <div id="footer">
+
+ 
+    <div class="page-content">
+    <div id="copyright">
+
+     <div id="dm-footer">
+        <ul>
+            <li class="creativecommons">
+            	<a href="http://creativecommons.org/licenses/by/3.0/br/" target="_blank" title="Licenciado pela Creative Commons 3.0">Creative Commons 3.0</a>
+            </li>
+            <li class="rss">
+            	<a href="http://feeds.feedburner.com/DiogoMatheusBlog?format=xml" target="_blank" title="Feed RSS do blog">RSS</a>
+            </li>
+            <li class="header">
+            	<a href="http://www.diogomatheus.com.br/blog/php/depuracao-de-aplicacoes-php-com-xdebug/#" title="Ir para o topo da página">Topo</a>
+            </li>
+        </ul>
+    </div>
+    <script type="text/javascript" src="./Depuração de aplicações PHP com XDebug   Diogo Matheus Blog_files/jQuery.Color.js"></script>
+    <script type="text/javascript" src="./Depuração de aplicações PHP com XDebug   Diogo Matheus Blog_files/dm-blog.js"></script>
+
+     
+     <!--[if lte IE 6]> <script type="text/javascript"> isIE6 = true; isIE = true; </script> <![endif]-->
+     <!--[if gte IE 7]> <script type="text/javascript"> isIE = true; </script> <![endif]-->
+
+     <script type="text/javascript">
+
+var addthis_config = {"data_track_clickback":false,"data_track_addressbar":false,"data_track_textcopy":false,"ui_language":"pt","ui_atversion":"300"};
+var addthis_product = 'wpp-4.0';
+</script><script type="text/javascript" src="./Depuração de aplicações PHP com XDebug   Diogo Matheus Blog_files/addthis_widget.js"></script>        <script type="text/javascript">
+            var eppathtoscripts = "http://www.diogomatheus.com.br/blog/wp-content/plugins/youtube-embed-plus/scripts/";
+            var epresponsiveselector = ["iframe.__youtube_prefs_widget__"];
+            var epdovol = true; //false;
+        </script>
+        <script type="text/javascript" src="./Depuração de aplicações PHP com XDebug   Diogo Matheus Blog_files/form.js"></script>
+        <script type="text/javascript">
+            var eppathtoscripts = "http://www.diogomatheus.com.br/blog/wp-content/plugins/youtube-embed-plus/scripts/";
+            var epresponsiveselector = ["iframe.__youtube_prefs_widget__"];
+            var epdovol = true; //false;
+        </script>
+        <script type="text/javascript" src="./Depuração de aplicações PHP com XDebug   Diogo Matheus Blog_files/shCore.js"></script>
+<script type="text/javascript" src="./Depuração de aplicações PHP com XDebug   Diogo Matheus Blog_files/shBrushPlain.js"></script>
+<script type="text/javascript" src="./Depuração de aplicações PHP com XDebug   Diogo Matheus Blog_files/shBrushPhp.js"></script>
+<script type="text/javascript">
+	(function(){
+		var corecss = document.createElement('link');
+		var themecss = document.createElement('link');
+		var corecssurl = "http://www.diogomatheus.com.br/blog/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/styles/shCore.css?ver=3.0.9";
+		if ( corecss.setAttribute ) {
+				corecss.setAttribute( "rel", "stylesheet" );
+				corecss.setAttribute( "type", "text/css" );
+				corecss.setAttribute( "href", corecssurl );
+		} else {
+				corecss.rel = "stylesheet";
+				corecss.href = corecssurl;
+		}
+		document.getElementsByTagName("head")[0].insertBefore( corecss, document.getElementById("syntaxhighlighteranchor") );
+		var themecssurl = "http://www.diogomatheus.com.br/blog/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/styles/shThemeDefault.css?ver=3.0.9";
+		if ( themecss.setAttribute ) {
+				themecss.setAttribute( "rel", "stylesheet" );
+				themecss.setAttribute( "type", "text/css" );
+				themecss.setAttribute( "href", themecssurl );
+		} else {
+				themecss.rel = "stylesheet";
+				themecss.href = themecssurl;
+		}
+		//document.getElementById("syntaxhighlighteranchor").appendChild(themecss);
+		document.getElementsByTagName("head")[0].insertBefore( themecss, document.getElementById("syntaxhighlighteranchor") );
+	})();
+	SyntaxHighlighter.config.strings.expandSource = '+ expand source';
+	SyntaxHighlighter.config.strings.help = '?';
+	SyntaxHighlighter.config.strings.alert = 'SyntaxHighlighter\n\n';
+	SyntaxHighlighter.config.strings.noBrush = 'Can\'t find brush for: ';
+	SyntaxHighlighter.config.strings.brushNotHtmlScript = 'Brush wasn\'t configured for html-script option: ';
+	SyntaxHighlighter.defaults['pad-line-numbers'] = false;
+	SyntaxHighlighter.defaults['toolbar'] = false;
+	SyntaxHighlighter.all();
+</script>
+<script type="text/javascript" src="./Depuração de aplicações PHP com XDebug   Diogo Matheus Blog_files/fitvids.min.js"></script>
+<script type="text/javascript" src="./Depuração de aplicações PHP com XDebug   Diogo Matheus Blog_files/jquery.mystique.js"></script>
+<script type="text/javascript" src="./Depuração de aplicações PHP com XDebug   Diogo Matheus Blog_files/saved_resource"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var postTabs = {"use_cookie":"1","post_ID":"1709"};;
+var postTabs = {"use_cookie":"1","post_ID":"1709"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="./Depuração de aplicações PHP com XDebug   Diogo Matheus Blog_files/postTabs.js"></script>
+<!--wp_footer-->
+    </div>
+
+   </div>
+  </div>
+  <!-- /footer -->
+
+ </div>
+</div>
+<!-- /shadow -->
+
+    <!-- page controls -->
+  <div id="pageControls"><a href="javascript:void(0);" class="fontSize bubble" title="Increase or decrease text size" style="display: none; opacity: 0; top: -9px;"></a></div>
+  <!-- /page controls -->
+  
+  <!-- 64 queries. 0,898 seconds. -->
+
+ </div>
+
+
+<div id="fancybox-tmp" style="padding: 50px;"></div><div id="fancybox-loading" style="display: none;"><div style="top: -240px;"></div></div><div id="fancybox-overlay" style="opacity: 0.75; display: none; background-color: rgb(51, 51, 51);"></div><div id="fancybox-wrap" style="opacity: 1; width: 320px; height: 228px; top: 3866px; left: 23px; display: none;"><div id="fancybox-outer"><div id="fancybox-inner" style="top: 10px; left: 10px; width: 300px; height: 208px; overflow: hidden;"></div><a id="fancybox-close" style="display: none;"></a><a href="javascript:;" id="fancybox-left" style="display: none;"><span class="fancy-ico" id="fancybox-left-ico"></span></a><a href="javascript:;" id="fancybox-right" style="display: none;"><span class="fancy-ico" id="fancybox-right-ico"></span></a></div></div><iframe id="rufous-sandbox" scrolling="no" frameborder="0" allowtransparency="true" style="display: none;"></iframe><script src="./Depuração de aplicações PHP com XDebug   Diogo Matheus Blog_files/356217447709282305" async=""></script><script src="./Depuração de aplicações PHP com XDebug   Diogo Matheus Blog_files/356217447709282305" async=""></script><script src="./Depuração de aplicações PHP com XDebug   Diogo Matheus Blog_files/356217447709282305" async=""></script><script src="./Depuração de aplicações PHP com XDebug   Diogo Matheus Blog_files/356217447709282305" async=""></script><script src="./Depuração de aplicações PHP com XDebug   Diogo Matheus Blog_files/356217447709282305" async=""></script></body></html>
